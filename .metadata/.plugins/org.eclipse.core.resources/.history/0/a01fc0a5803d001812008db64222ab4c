@@ -1,0 +1,16 @@
+package com.yibo.dao.admin.impl;
+
+import org.apache.commons.dbutils.QueryRunner;
+
+import com.yibo.dao.admin.AdminProductDao;
+
+public class AdminProductDaoImpl implements AdminProductDao {
+
+	@Override
+	public int findProCount() {
+		QueryRunner qr = new QueryRunner();
+		
+		return 0;
+	}
+
+}

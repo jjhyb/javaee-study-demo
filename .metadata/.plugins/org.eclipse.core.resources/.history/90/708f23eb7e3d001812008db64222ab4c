@@ -1,0 +1,21 @@
+package com.yibo.web.servlet.admin;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * 后台系统管理商品的servlet
+ */
+public class AdminProductServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+	public String page(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//获取请求商品展示发过来的数据
+		String curPage = request.getParameter("curPage");
+		
+		return null;
+	}
+}

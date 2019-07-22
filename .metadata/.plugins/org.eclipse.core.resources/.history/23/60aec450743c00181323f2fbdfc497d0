@@ -1,0 +1,12 @@
+package com.yibo.bean;
+
+public class Orderitem {
+	private String oid;
+	private String name;
+	private String address;
+	private String telephone;
+	private String total;
+	private String ordertime;
+	private String ordertime;
+	private String ordertime;
+}

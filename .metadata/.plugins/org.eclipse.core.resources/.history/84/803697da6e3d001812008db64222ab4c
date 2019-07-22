@@ -1,0 +1,12 @@
+package com.yibo.dao.admin;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.yibo.bean.Category;
+
+public interface AdminCategoryDao {
+
+	List<Category> findAll() throws SQLException;
+
+}

@@ -1,0 +1,29 @@
+package com.yibo.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.yibo.bean.Orderitem;
+import com.yibo.bean.Order;
+import com.yibo.bean.Product;
+import com.yibo.bean.User;
+
+public interface OrderDao {
+
+	Product findProductById(String pid) throws SQLException;
+
+	void saveOrder(Order order) throws SQLException;
+
+	void saveOrderitem(Orderitem orderitem) throws SQLException;
+
+	int findcountOrder(String uid) throws SQLException;
+
+	List<Order> findOrder(User user, int curPage, int orderPage) throws Exception;
+
+	Order findByOid(User user, String oid) throws Exception;
+
+	void updateOrder(Order order) throws SQLException;
+
+	Order findOrderByOid(String oid) throws SQLException;
+
+}

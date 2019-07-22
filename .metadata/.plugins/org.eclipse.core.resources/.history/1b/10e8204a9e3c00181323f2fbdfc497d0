@@ -1,0 +1,10 @@
+package com.yibo.service;
+
+import com.yibo.bean.Car;
+import com.yibo.bean.User;
+
+public interface OrderService {
+
+	Order saveOrder(User user, Car car);
+
+}

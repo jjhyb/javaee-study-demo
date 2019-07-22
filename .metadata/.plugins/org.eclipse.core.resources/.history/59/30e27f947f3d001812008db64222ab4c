@@ -1,0 +1,5 @@
+package com.yibo.service.admin;
+
+public interface AdminProductService {
+
+}

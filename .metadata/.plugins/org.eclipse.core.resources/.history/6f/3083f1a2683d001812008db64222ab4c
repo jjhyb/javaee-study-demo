@@ -1,0 +1,5 @@
+5package com.yibo.service.admin;
+
+public interface AdminCategoryService {
+
+}

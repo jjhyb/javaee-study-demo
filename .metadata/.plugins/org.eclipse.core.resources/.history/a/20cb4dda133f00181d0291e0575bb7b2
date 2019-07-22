@@ -1,0 +1,7 @@
+package com.yibo.dao.admin;
+
+public interface AdminOrderDao {
+
+	int findAll(int curPage, Integer state);
+
+}

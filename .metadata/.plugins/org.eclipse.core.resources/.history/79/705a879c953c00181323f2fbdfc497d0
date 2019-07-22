@@ -1,0 +1,5 @@
+package com.yibo.service;
+
+public interface OrderService {
+
+}

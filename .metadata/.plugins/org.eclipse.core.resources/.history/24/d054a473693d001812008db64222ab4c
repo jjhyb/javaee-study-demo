@@ -1,0 +1,9 @@
+package com.yibo.service.admin;
+
+import com.yibo.bean.Category;
+
+public interface AdminCategoryService {
+
+	Category findAll();
+
+}

@@ -1,0 +1,42 @@
+package com.yibo.dao.impl;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapHandler;
+
+import com.yibo.bean.Product;
+import com.yibo.constant.Constant;
+import com.yibo.dao.ProductDao;
+import com.yibo.utils.ManagerThreadLocal;
+
+public class ProductDaoImpl implements ProductDao {
+
+	@Override
+	public List<Product> findHotProducts( ) throws SQLException {
+		QueryRunner qr = new QueryRunner();
+		String sql = "select * from product where pflag=? and is_hot=? limit ?,?";
+		return qr.query(ManagerThreadLocal.getConnection(), sql, new BeanListHandler<>(Product.class), Constant.UPJIA,Constant.HOT,0,9);
+		
+		/*String sql = "select * from product p,category c where p.cid = c.cid and pflag=? and is_hot=? limit ?,?";
+		Map<String, Object> map = qr.query(ManagerThreadLocal.getConnection(), "select * from produc", new MapHandler(), Constant.UPJIA,Constant.HOT,0,9);
+		//将map数据封装到bean对象中
+		Product pro = new Product();
+		BeanUtils.populate(pro, map);
+		
+		//将map数据封装到Category中
+*/		
+	}
+
+	@Override
+	public List<Product> findLatestProduct() throws SQLException {
+		QueryRunner qr = new QueryRunner();
+		String sql = "select * from product where pflag=? and is_hot=? limit ?,?";
+		return null;
+	}
+
+}

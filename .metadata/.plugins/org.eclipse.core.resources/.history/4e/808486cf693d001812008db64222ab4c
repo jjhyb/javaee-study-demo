@@ -1,0 +1,21 @@
+package com.yibo.dao.admin.impl;
+
+import java.util.List;
+
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+
+import com.yibo.bean.Category;
+import com.yibo.dao.admin.AdminCategoryDao;
+import com.yibo.utils.ManagerThreadLocal;
+
+public class AdminCategoryDaoImpl implements AdminCategoryDao {
+
+	@Override
+	public List<Category> findAll() {
+		QueryRunner qr = new QueryRunner();
+		qr.query(ManagerThreadLocal.getConnection(),"select * from category",new BeanListHandler<>(Category.class))
+		return null;
+	}
+
+}

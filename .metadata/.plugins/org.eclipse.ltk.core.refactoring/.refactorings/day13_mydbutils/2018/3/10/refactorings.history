@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Extract method &apos;private void setParameter(PreparedStatement ps, Object ... params) throws SQLException &apos; from &apos;com.itheima.commons.dbutils.QueryRunner.Update()&apos; to &apos;com.itheima.commons.dbutils.QueryRunner&apos;&#x0D;&#x0A;- Original project: &apos;day13_mydbutils&apos;&#x0D;&#x0A;- Method name: &apos;setParameter&apos;&#x0D;&#x0A;- Destination type: &apos;com.itheima.commons.dbutils.QueryRunner&apos;&#x0D;&#x0A;- Declared visibility: &apos;private&apos;" comments="false" description="Extract method &apos;setParameter&apos;" destination="0" exceptions="false" flags="786434" id="org.eclipse.jdt.ui.extract.method" input="/src&lt;com.itheima.commons.dbutils{QueryRunner.java" name="setParameter" replace="false" selection="1015 288" stamp="1520676293773" version="1.0" visibility="2"/>
+</session>

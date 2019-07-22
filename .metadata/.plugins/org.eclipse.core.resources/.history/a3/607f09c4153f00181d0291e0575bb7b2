@@ -1,0 +1,9 @@
+package com.yibo.dao.admin;
+
+import java.sql.SQLException;
+
+public interface AdminOrderDao {
+
+	int findAll(Integer state) throws SQLException;
+
+}

@@ -1,0 +1,5 @@
+package com.yibo.dao.admin;
+
+public interface AdminCategoryDao {
+
+}

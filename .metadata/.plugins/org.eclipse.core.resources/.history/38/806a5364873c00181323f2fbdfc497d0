@@ -1,0 +1,13 @@
+package com.yibo.bean;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Orderitem {
+	private String itemid;
+	private int count;
+	private double sutotal;
+	private String pid;
+	private Orders order;
+	private List<Product> pro = new ArrayList<>();
+}

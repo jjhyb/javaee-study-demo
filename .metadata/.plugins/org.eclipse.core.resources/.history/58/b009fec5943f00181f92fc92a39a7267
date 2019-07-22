@@ -1,0 +1,84 @@
+package com.yibo.dao.admin.impl;
+
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
+
+import com.yibo.bean.Order;
+import com.yibo.bean.Orderitem;
+import com.yibo.bean.Product;
+import com.yibo.dao.admin.AdminOrderDao;
+import com.yibo.utils.ManagerThreadLocal;
+
+public class AdminOrderDaoImpl implements AdminOrderDao {
+
+	@Override
+	public int findAll(String state) throws SQLException {
+		QueryRunner qr = new QueryRunner();
+		String sql = "select count(*) from orders";
+		//创建一个集合用于封装query方法的参数
+		List<Integer> list = new ArrayList<>();
+		if(state != null && !"".equals(state)){
+			sql += " where state=?";
+			list.add(Integer.parseInt(state));
+		}
+		qr.query(ManagerThreadLocal.getConnection(),sql,new ScalarHandler(),list.toArray());
+		return 0;
+	}
+
+	@Override
+	public List<Order> findAll(int curPage, String state, Integer pagesize) throws SQLException {
+		QueryRunner qr = new QueryRunner();
+		String sql = "select * from orders";
+		//创建一个集合用于封装query方法的参数
+		List<Integer> list = new ArrayList<>();
+		//设置mysql分页查询条件
+		int a = (curPage-1)*pagesize;
+		if(state!=null && !"".equals(state)){
+			sql += " where state=? limit ?,?";
+			list.add(Integer.parseInt(state));
+		}else {
+			sql += " limit ?,?";
+		}
+		list.add(a);
+		list.add(pagesize);
+		
+		return qr.query(ManagerThreadLocal.getConnection(),sql,new BeanListHandler<>(Order.class),list.toArray());
+	}
+
+	@Override
+	public List<Orderitem> findOrderByOid(String oid) throws SQLException, IllegalAccessException, InvocationTargetException {
+		QueryRunner qr = new QueryRunner();
+		String sql = "select * from orderitem o,product p where o.pid=p.pid and o.oid=?";
+		List<Map<String, Object>> list = qr.query(ManagerThreadLocal.getConnection(),sql,new MapListHandler(),oid);
+		
+		//创建一个集合，用于封装Orderitem数据
+		List<Orderitem> orderitems = new ArrayList<>();
+		
+		//遍历list集合将数据封装到OrderItem集合中
+		for (Map<String, Object> map : list) {
+			//创建一个OrderItem对象，通过BeanUtils将数据封装进去
+			Orderitem ord = new Orderitem();
+			BeanUtils.populate(ord, map);
+			
+			//创建一个Product对象，通过BeanUtils将数据封装进去
+			Product pro = new Product();
+			BeanUtils.populate(pro, map);
+			//把product对象设置到Orderitem中
+			ord.setPro(pro);
+			//将订单项数据添加进集合中
+			orderitems.add(ord);
+		}
+		return null;
+	}
+
+
+}

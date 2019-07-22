@@ -1,0 +1,7 @@
+package com.yibo.dao.admin;
+
+public interface AdminProductDao {
+
+	int findProCount();
+
+}

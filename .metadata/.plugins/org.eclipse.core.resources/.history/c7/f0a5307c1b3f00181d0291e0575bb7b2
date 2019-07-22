@@ -1,0 +1,13 @@
+package com.yibo.service.admin;
+
+import java.util.List;
+
+import com.yibo.bean.Category;
+
+public interface AdminCategoryService {
+
+	List<Category> findAll();
+
+	void add(String cname);
+
+}

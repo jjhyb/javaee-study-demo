@@ -1,0 +1,9 @@
+package com.yibo.bean;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Orderitem {
+	private String itemid;
+	private double count;
+}

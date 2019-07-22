@@ -1,0 +1,23 @@
+package com.yibo.service.admin;
+
+import java.util.List;
+
+import com.yibo.bean.Category;
+
+public interface AdminCategoryService {
+	/**
+	 * 查询所有商品分类
+	 * @return
+	 */
+	List<Category> findAll();
+
+	void add(String cname);
+
+	boolean delete(String cid);
+
+	Category edit(String cid);
+
+	void edit(String cid, String cname);
+
+
+}

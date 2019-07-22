@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy package &apos;com.itheima.bean&apos; to &apos;day11_dbutils/src&apos;&#x0D;&#x0A;- Original project: &apos;day11_dbcp&apos;&#x0D;&#x0A;- Destination element: &apos;day11_dbutils/src&apos;&#x0D;&#x0A;- Original element: &apos;day11_dbcp/src/com.itheima.bean&apos;" description="Copy package" destination="=day11_dbutils/src" element1="/src&lt;com.itheima.bean" flags="589830" fragments="1" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyPackages" stamp="1520478185943" version="1.0"/>
+</session>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;MyInvocationHandler.java&apos; to &apos;day27_demo/src/com.yibo.web.filter&apos;&#x0D;&#x0A;- Original project: &apos;day27_proxy&apos;&#x0D;&#x0A;- Destination element: &apos;day27_demo/src/com.yibo.web.filter&apos;&#x0D;&#x0A;- Original element: &apos;com.yibo.filter.MyInvocationHandler.java&apos;" description="Copy compilation unit" destination="=day27_demo/src&lt;com.yibo.web.filter" element1="/src&lt;com.yibo.filter{MyInvocationHandler.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1522413200617" units="1" version="1.0"/>
+</session>

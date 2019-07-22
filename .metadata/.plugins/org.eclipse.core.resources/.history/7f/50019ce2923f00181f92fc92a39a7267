@@ -1,0 +1,45 @@
+package com.yibo.web.servlet.admin;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.yibo.bean.Order;
+import com.yibo.bean.PageBean;
+import com.yibo.constant.Constant;
+import com.yibo.service.admin.AdminOrderService;
+import com.yibo.service.admin.impl.AdminOrderServiceImpl;
+import com.yibo.web.servlet.BaseServlet;
+
+/**
+ * 后台页面处理订单状态的servlet
+ */
+public class AdminOrderServlet extends BaseServlet {
+	private static final long serialVersionUID = 1L;
+	
+	public String page(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//获取后台订单管理页面发过来的参数
+		int curPage = Integer.parseInt(request.getParameter("curPage"));
+		
+		/*//如果state没有获取到值，那么会抛数组转换异常
+		Integer state = Integer.parseInt(request.getParameter("state"));*/
+		String state = request.getParameter("state");
+		//调用业务层方法处理订单状态的分页显示
+		AdminOrderService aos = new AdminOrderServiceImpl();
+		PageBean<Order> pb = aos.page(curPage,state);
+		//将pb存到域对象中
+		request.setAttribute("pb", pb);
+		//设置为请求转发
+		result = Constant.FORWARD;
+		return "/admin/order/list.jsp";
+	}
+
+	public void findOrderByOid(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//获取后台订单管理页面发过来的参数
+		String oid = request.getParameter("oid");
+		//调用业务层方法获查询订单
+		
+	}
+}

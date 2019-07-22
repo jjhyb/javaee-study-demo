@@ -1,0 +1,18 @@
+package com.yibo.dao.admin;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.yibo.bean.Order;
+import com.yibo.bean.Orderitem;
+
+public interface AdminOrderDao {
+
+	int findAll(String state) throws SQLException;
+
+	List<Order> findAll(int curPage, String state, Integer adminProductPagesize) throws SQLException;
+
+	List<Orderitem> findOrderByOid(String oid);
+
+
+}

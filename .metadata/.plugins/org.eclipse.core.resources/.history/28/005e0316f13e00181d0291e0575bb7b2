@@ -1,0 +1,139 @@
+package com.yibo.web.servlet.admin;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadBase;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.IOUtils;
+
+import com.yibo.bean.Category;
+import com.yibo.bean.Product;
+import com.yibo.constant.Constant;
+import com.yibo.service.admin.AdminProductService;
+import com.yibo.service.admin.impl.AdminProductServiceImpl;
+import com.yibo.utils.DateUtil;
+import com.yibo.utils.UUIDUtils;
+import com.yibo.utils.UploadUtils;
+
+/**
+ * Servlet implementation class AdminAddProductServlet
+ */
+public class UploadServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//创建一个DisFileItemFactory工厂类
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		//创建一个ServletFileUpLoad核心对象
+		ServletFileUpload sfu = new ServletFileUpload(factory);
+		//创建一个Product对象用于封装表单提交数据
+		Product pro = new Product();
+		
+		//创建一个HashMap用于接收上传表单项,便于后面用BeanUtils封装参数到对象
+		Map<String,Object> map = new HashMap<>();
+		
+		try {
+		//限制上传文件的大小为3M
+		sfu.setFileSizeMax(1024*1024*3);
+		
+		//解析request对象，并得到一个表单项集合
+			List<FileItem> list = sfu.parseRequest(request);
+			//遍历表单项集合
+			for (FileItem fileItem : list) {
+				//获取上传表单项name
+				String name = fileItem.getFieldName();
+				//获取上传表单项value
+				String value = fileItem.getString();
+				
+				if(fileItem.isFormField()){
+					//普通上传表单项
+					map.put(name, value);
+				}else {
+					//上传表单项
+					/*//获取上传表单项name
+					String name = fileItem.getFieldName();
+					//获取上传文件的路径名
+					String value = fileItem.getString();*/
+					//封装成File对象，以便获取其后缀名
+					File file = new File(value);
+					String filename = file.getName();
+					
+					//创建一个磁盘文件夹空间
+					String path1 = request.getServletContext().getRealPath("/product");
+					String path2 =  UploadUtils.getDir();
+					File dir = new File(path1,path2);
+					//如果此路径不存在
+					if(!dir.exists()){
+						//则创建
+						dir.mkdirs();
+					}
+					
+					//解决上传文件重名问题
+					filename = UploadUtils.getUUIDName(filename);
+					
+					//获取字节输入流,用于读取文件
+					InputStream in = fileItem.getInputStream();
+					
+					//创建字节输出流，用于将文件存盘
+					FileOutputStream out = new FileOutputStream(new File(dir, filename));
+					
+					//将文件输入流和文件输出流关联
+					IOUtils.copy(in, out);
+					
+					//将文件上传产生的临时文件删除
+					fileItem.delete();
+					//将文件名保存设置到map集合中
+					map.put("pimage", "product/"+path2+"/"+filename);
+				}
+			}
+			//将上传数据封装到product对象中
+			BeanUtils.populate(pro, map);
+			//手动设置pid,pdate,pflag
+			pro.setPdate(DateUtil.getCurrtentTime());
+			pro.setPid(UUIDUtils.getId());
+			pro.setPflag(Constant.UPJIA);
+			//创建Category商品分类对象用于封装数据
+			Category cg = new Category();
+			BeanUtils.populate(cg, map);
+			//将分类对象设置到商品中
+			pro.setCategory(cg);
+			//调用业务层方法将商品存储到数据库
+			AdminProductService aps = new AdminProductServiceImpl();
+			
+			
+		} catch (FileUploadBase.FileSizeLimitExceededException e) {
+			e.printStackTrace();
+			response.setContentType("text/html;charset=UTF-8");
+			response.getWriter().write("您上传的文件过大，不能超过3M");
+		} catch (FileUploadException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}

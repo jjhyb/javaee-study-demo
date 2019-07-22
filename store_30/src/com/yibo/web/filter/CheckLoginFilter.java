@@ -1,0 +1,53 @@
+package com.yibo.web.filter;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.yibo.bean.User;
+
+/**
+ * 过滤用户未登录情况下访问购物车和订单页面，直接重定向到登录页面让其登录
+ */
+public class CheckLoginFilter implements Filter {
+	private static String[] str = {"car","order"};
+    public CheckLoginFilter() {
+    }
+
+	public void destroy() {
+	}
+
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		//强转request和response
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse resp = (HttpServletResponse) response;
+		//获取url路径
+		String uri = req.getRequestURI();
+		//遍历字符数组
+		for (String s : str) {
+			//如果该请求地址的uri中包含该字符串
+			if(uri.contains(s)){
+				//从session中获取user对象
+				User user = (User) req.getSession().getAttribute("user");
+				
+				if(user == null){
+					//如果用户未登录,直接让其重定向到登录页面
+					resp.sendRedirect(req.getContextPath()+"/jsp/login.jsp");
+					return;
+				}
+			}
+		}
+		//如果用户不是访问购物车与订单项页面，则直接放行，不做过滤检查
+		chain.doFilter(request, response);
+	}
+	public void init(FilterConfig fConfig) throws ServletException {
+	}
+
+}

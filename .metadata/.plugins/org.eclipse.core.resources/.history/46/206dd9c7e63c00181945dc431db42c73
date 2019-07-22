@@ -1,0 +1,133 @@
+package com.yibo.dao.impl;
+
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
+
+import com.yibo.bean.Order;
+import com.yibo.bean.Orderitem;
+import com.yibo.bean.Product;
+import com.yibo.bean.User;
+import com.yibo.dao.OrderDao;
+import com.yibo.utils.DateUtil;
+import com.yibo.utils.ManagerThreadLocal;
+
+public class OrderDaoImpl implements OrderDao{
+
+	@Override
+	public Product findProductById(String pid) throws SQLException {
+		QueryRunner qr = new QueryRunner();
+		return qr.query(ManagerThreadLocal.getConnection(), "select * from product where pid=?", new BeanHandler<>(Product.class), pid);
+	}
+
+	@Override
+	public void saveOrder(Order order) throws SQLException {
+		QueryRunner qr = new QueryRunner();
+		String sql = "insert into orders values(?,?,?,?,?,?,?,?)";
+		qr.update(ManagerThreadLocal.getConnection(), sql,order.getOid(),order.getOrdertime(),order.getTotal(),order.getState(),order.getAddress(),order.getName(),order.getTelephone(),order.getUser().getUid());
+	}
+
+	@Override
+	public void saveOrderitem(Orderitem orderitem) throws SQLException {
+		QueryRunner qr = new QueryRunner();
+		String sql = "insert into orderitem values(?,?,?,?,?)";
+		qr.update(ManagerThreadLocal.getConnection(),sql,orderitem.getItemid(),orderitem.getCount(),orderitem.getSubtotal(),orderitem.getPro().getPid(),orderitem.getOrder().getOid());
+	}
+
+	@Override
+	public int findcountOrder(String uid) throws SQLException {
+		QueryRunner qr = new QueryRunner();
+		String sql = "select count(*) from orders where uid=?";
+		long count = (long) qr.query(ManagerThreadLocal.getConnection(), sql, new ScalarHandler(), uid);
+		return (int)count;
+	}
+
+	@Override
+	public List<Order> findOrder(User user, int curPage,int orderPage) throws Exception {
+		QueryRunner qr = new QueryRunner();
+		//计算分页mysql分页查询条件
+		int a = (curPage-1)*orderPage;
+		String sql = "select * from orders where uid=? limit ?,?";
+		//先用分页查出每页展示的订单项
+		List<Order> list1 = qr.query(ManagerThreadLocal.getConnection(), sql, new BeanListHandler<>(Order.class), user.getUid(),a,orderPage);
+	
+		
+		//创建一个list集合用于封装订单数据
+		List<Order> orders = new ArrayList<>();
+		
+		//遍历订单集合，取到每一个订单的oid，然后在用oid查订单项和商品信息
+		for (Order od : list1) {
+			//创建订单order,用于封装orderItem集合数据
+			Order order = new Order();
+			String oid = od.getOid();
+			
+			//查找某个订单的所有订单项
+			Map<String, Orderitem> orderiteMap = getOrderItems(oid);
+			order.setOid(oid);
+			order.setTotal(od.getTotal());
+			order.setState(od.getState());
+			String ordertime = od.getOrdertime();
+			String currentTimeStamp2 = DateUtil.getCurrentTimeStamp2(ordertime);
+			order.setOrdertime(currentTimeStamp2);
+			order.setMap(orderiteMap);
+			//将order添加到orders集合中
+			orders.add(order);
+			
+		}
+		
+		//将订单集合返回
+		return orders;
+	}
+
+	/**
+	 * 查找某个订单的所有订单项
+	 * @param oid
+	 * @return
+	 * @throws SQLException
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	private Map<String, Orderitem> getOrderItems(String oid)
+			throws SQLException, IllegalAccessException, InvocationTargetException {
+		//创建一个hashMap集合用于封装orderItem数据
+		Map<String,Orderitem> orderiteMap = new HashMap<>();
+		String sql1 = "select * from orderitem o,product p where o.pid=p.pid and o.oid=?";
+		//根据订单oid查询出所有的订单项商品
+		QueryRunner qr1 = new QueryRunner();
+		List<Map<String, Object>> list2 = qr1.query(ManagerThreadLocal.getConnection(), sql1, new MapListHandler(), oid);
+		//遍历出每一个map,并将数据封装到Orderitem中
+		for (Map<String, Object> map : list2) {
+			//创建订单项，并将数据封装到订单项中
+			Orderitem orderitem = new Orderitem();
+			BeanUtils.populate(orderitem, map);
+			//创建商品对象，并将数据封装到商品对象中
+			Product pro = new Product();
+			BeanUtils.populate(pro, map);
+			//将商品对象设置到订单项中
+			orderitem.setPro(pro);
+			//在将订单项设置到订单中
+			orderiteMap.put(pro.getPid(), orderitem);
+		}
+		return orderiteMap;
+	}
+
+	@Override
+	public Order findByOid(User user, String oid) throws Exception {
+		QueryRunner qr = new QueryRunner();
+		String sql = "select * from orders where oid=?";
+		Order order = qr.query(ManagerThreadLocal.getConnection(), sql, new BeanHandler<>(Order.class), oid);
+		Map<String, Orderitem> orderItems = getOrderItems(oid);
+		return null;
+	}
+
+}

@@ -1,0 +1,13 @@
+package com.yibo.bean;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Orderitem {
+	private String itemid;
+	private int count;
+	private double sutotal;
+	private String pid;
+	private Orders order;
+	private Product pro;
+}

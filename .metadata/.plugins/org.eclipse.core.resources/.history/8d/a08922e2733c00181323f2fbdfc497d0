@@ -1,0 +1,5 @@
+package com.yibo.bean;
+
+public class orderitem {
+
+}

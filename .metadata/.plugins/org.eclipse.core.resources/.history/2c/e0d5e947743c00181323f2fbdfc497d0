@@ -1,0 +1,6 @@
+package com.yibo.bean;
+
+public class Orderitem {
+	private String oid;
+	
+}

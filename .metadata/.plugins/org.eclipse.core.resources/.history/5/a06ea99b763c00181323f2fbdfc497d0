@@ -1,0 +1,15 @@
+package com.yibo.bean;
+
+import java.util.Map;
+
+public class Orderitem {
+	private String oid;
+	private String name;
+	private String address;
+	private String telephone;
+	private String total;
+	private String ordertime;
+	private String state;
+	private String uid;
+	private Map<String,Product> map = new HashMap<>();
+}

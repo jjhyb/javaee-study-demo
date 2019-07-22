@@ -1,0 +1,34 @@
+package com.yibo.dao.admin;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.yibo.bean.Category;
+
+public interface AdminCategoryDao {
+	/**
+	 * 查询所有商品分类的方法
+	 * @return
+	 * @throws SQLException
+	 */
+	List<Category> findAll() throws SQLException;
+
+	/**
+	 * 添加商品分类的功能
+	 * @param cg
+	 * @throws SQLException
+	 */
+	void addCategory(Category cg) throws SQLException;
+
+	/**
+	 * 
+	 * @param cid
+	 * @throws SQLException
+	 */
+	void delete(String cid) throws SQLException;
+
+	Category edit(java.lang.String cid) throws SQLException;
+
+	void edit(java.lang.String cid, java.lang.String cname);
+
+}

@@ -1,0 +1,20 @@
+package com.yibo.dao.admin.impl;
+
+import java.sql.SQLException;
+
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
+
+import com.yibo.dao.admin.AdminProductDao;
+import com.yibo.utils.ManagerThreadLocal;
+
+public class AdminProductDaoImpl implements AdminProductDao {
+
+	@Override
+	public int findProCount() throws SQLException {
+		QueryRunner qr = new QueryRunner();
+		long count = (long)qr.query(ManagerThreadLocal.getConnection(), "select count(*) from product where pflag=?", new ScalarHandler(), 0);
+		return (int)count;
+	}
+
+}

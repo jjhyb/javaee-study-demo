@@ -1,0 +1,4 @@
+#Tomcat publish data
+#Sat Apr 14 15:23:12 CST 2018
+org.eclipse.jst.jee.server\:store_30=E\:\\apache-tomcat-7.0.52\\webapps\\store_30
+org.eclipse.jst.jee.server\:test=E\:\\apache-tomcat-7.0.52\\webapps\\test

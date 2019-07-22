@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;jdbcconfig.properties&apos; to &apos;day11_dbcp/src&apos;&#x0D;&#x0A;- Original project: &apos;day11_myconnectionpool&apos;&#x0D;&#x0A;- Destination element: &apos;day11_dbcp/src&apos;&#x0D;&#x0A;- Original element: &apos;jdbcconfig.properties&apos;" description="Copy file" destination="=day11_dbcp/src" element1="src/jdbcconfig.properties" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1520471916011" units="0" version="1.0"/>
+</session>

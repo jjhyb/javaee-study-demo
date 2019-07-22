@@ -1,0 +1,10 @@
+package com.yibo.service.admin;
+
+import com.yibo.bean.Order;
+import com.yibo.bean.PageBean;
+
+public interface AdminOrderService {
+
+	PageBean<Order> page(int curPage, Integer state);
+
+}

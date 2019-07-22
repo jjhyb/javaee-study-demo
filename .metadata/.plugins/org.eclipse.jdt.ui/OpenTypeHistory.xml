@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<typeInfoHistroy>
+<typeInfo handle="=day17_request02/src&lt;com.itheima.dao{UserDao.java[UserDao" modifiers="513" timestamp="1521186799046"/>
+<typeInfo handle="=day20_bank/src&lt;com.itheima.service{UserService.java[UserService" modifiers="513" timestamp="1521716877228"/>
+<typeInfo handle="=day20_bank/src&lt;com.itheima.dao{UserDao.java[UserDao" modifiers="513" timestamp="1521685033549"/>
+<typeInfo handle="=day21_CRUD/src&lt;com.itheima.service{ProductService.java[ProductService" modifiers="513" timestamp="1521855680657"/>
+<typeInfo handle="=day21_CRUD/src&lt;com.itheima.dao{ProductDao.java[ProductDao" modifiers="513" timestamp="1521855664317"/>
+<typeInfo handle="=day24_citys/src&lt;com.itheima.service{CityService.java[CityService" modifiers="513" timestamp="1522120906238"/>
+<typeInfo handle="=day24_citys/src&lt;com.itheima.dao{CityDao.java[CityDao" modifiers="513" timestamp="1522121108898"/>
+<typeInfo handle="=day24_link3/src&lt;com.itheima.service{LinkService.java[LinkService" modifiers="513" timestamp="1522168029702"/>
+<typeInfo handle="=day24_link3/src&lt;com.itheima.dao{LinkDao.java[LinkDao" modifiers="513" timestamp="1522170903372"/>
+<typeInfo handle="=store_30/src&lt;com.yibo.service{CarService.java[CarService" modifiers="513" timestamp="1523158548153"/>
+<typeInfo handle="=store_30/src&lt;com.yibo.service{OrderService.java[OrderService" modifiers="513" timestamp="1523432502156"/>
+</typeInfoHistroy>

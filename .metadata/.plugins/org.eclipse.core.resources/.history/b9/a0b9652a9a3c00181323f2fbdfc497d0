@@ -1,0 +1,9 @@
+package com.yibo.dao;
+
+import com.yibo.bean.Product;
+
+public interface OrderDao {
+
+	Product findProductById(String pid);
+
+}
